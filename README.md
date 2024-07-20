@@ -17,3 +17,8 @@ Te enseñará cómo crear un sistema de cupones para aplicar descuentos al carri
 Te mostrará cómo añadir internacionalización a tu proyecto. Aprenderás cómo generar y gestionar archivos de traducción y traducir cadenas en código Python y plantillas de Django. Utilizarás Rosetta para gestionar traducciones e implementar URLs por idioma. Aprenderás a traducir campos de modelos usando `django-parler` y cómo usar traducciones con el ORM. Finalmente, crearás un campo de formulario localizado usando `django-localflavor`.
 
 
+```bash
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13.1-management
+```
+
+```bash
