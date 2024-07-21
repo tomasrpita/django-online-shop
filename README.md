@@ -16,9 +16,102 @@ Te enseñará cómo crear un sistema de cupones para aplicar descuentos al carri
 ### Capítulo 11: Añadiendo Internacionalización a tu Tienda
 Te mostrará cómo añadir internacionalización a tu proyecto. Aprenderás cómo generar y gestionar archivos de traducción y traducir cadenas en código Python y plantillas de Django. Utilizarás Rosetta para gestionar traducciones e implementar URLs por idioma. Aprenderás a traducir campos de modelos usando `django-parler` y cómo usar traducciones con el ORM. Finalmente, crearás un campo de formulario localizado usando `django-localflavor`.
 
+## Puesta en Marcha
 
-```bash
-docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13.1-management
-```
+### Prerrequisitos
 
-```bash
+Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
+
+### Instalación de Dependencias
+
+1. **Clonar el repositorio:**
+
+    ```sh
+    git clone https://github.com/tomasrpita/django-online-shop.git
+    cd django-online-shop
+    ```
+
+2. **Crear un entorno virtual e instalar las dependencias de Python:**
+
+    ```sh
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    ```
+
+3. **Crear el archivo `.env` a partir del archivo de plantilla `.env.template`:**
+
+    ```sh
+    cp .env.template .env
+    ```
+
+4. **Rellenar las variables de entorno en el archivo `.env`:**
+
+    ```plaintext
+    # Email
+    EMAIL_HOST=smtp.example.com
+    EMAIL_HOST_USER=your-email@example.com
+    EMAIL_HOST_PASSWORD=your-email-password
+    EMAIL_PORT=587
+    DEFAULT_FROM_EMAIL=your-email@example.com
+
+    # RabbitMQ
+    RABBITMQ_USER=your_rabbitmq_user
+    RABBITMQ_PASSWORD=your_rabbitmq_password
+    ```
+
+### Configuración de Docker
+
+1. **Iniciar los servicios con Docker Compose:**
+
+    ```sh
+    docker-compose up -d
+    ```
+
+### Configuración de la Aplicación Django
+
+1. **Ejecutar las migraciones de la base de datos:**
+
+    ```sh
+    python ./myshop/manage.py migrate
+    ```
+
+2. **Crear un superusuario:**
+
+    ```sh
+    python ./myshop/manage.py createsuperuser
+    ```
+
+3. **Cargar datos iniciales (si aplica):**
+
+    ```sh
+    python ./myshop/manage.py loaddata initial_data.json
+    ```
+
+### Ejecutar Celery y Flower
+
+1. **Iniciar el worker de Celery:**
+
+    ```sh
+    celery -A myshop worker -l info
+    ```
+
+2. **Iniciar Flower para monitorear Celery:**
+
+    ```sh
+    celery -A myshop flower --basic-auth=your_user:your_password
+    ```
+
+### Iniciar el Servidor de Desarrollo
+
+1. **Iniciar el servidor de desarrollo de Django:**
+
+    ```sh
+    python ./myshop/manage.py runserver 0.0.0.0:8000
+    ```
+
+### Acceso a la Aplicación
+
+- La aplicación estará disponible en `http://localhost:8000`.
+- La interfaz de administración de Django estará en `http://localhost:8000/admin`.
+
