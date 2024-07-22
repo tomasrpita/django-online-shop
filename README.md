@@ -58,6 +58,10 @@ Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
     # RabbitMQ
     RABBITMQ_USER=your_rabbitmq_user
     RABBITMQ_PASSWORD=your_rabbitmq_password
+
+    # Stripe
+    STRIPE_PUBLISHABLE_KEY=pk_test_XXXX
+    STRIPE_SECRET_KEY=sk_test_XXXX
     ```
 
 ### Configuración de Docker
