@@ -16,11 +16,9 @@ def stripe_webhook(request):
         )
     except ValueError as e:
         # Invalid payload
-        print(e)
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
-        print(e)
         return HttpResponse(status=400)
     if event.type == "checkout.session.completed":
         session = event.data.object
@@ -31,5 +29,6 @@ def stripe_webhook(request):
                 return HttpResponse(status=404)
             # mark order as paid
             order.paid = True
+            order.stripe_id = session.payment_intent
             order.save()
     return HttpResponse(status=200)
