@@ -62,6 +62,7 @@ Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
     # Stripe
     STRIPE_PUBLISHABLE_KEY=pk_test_XXXX
     STRIPE_SECRET_KEY=sk_test_XXXX
+    STRIPE_WEBHOOK_SECRET=whsec_XXXX
     ```
 
 ### Configuración de Docker
