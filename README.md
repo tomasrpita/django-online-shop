@@ -63,6 +63,11 @@ Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
     STRIPE_PUBLISHABLE_KEY=pk_test_XXXX
     STRIPE_SECRET_KEY=sk_test_XXXX
     STRIPE_WEBHOOK_SECRET=whsec_XXXX
+
+    # redis
+    REDIS_HOST=
+    REDIS_PORT=
+    REDIS_DB=
     ```
 
 ### Configuración de Docker

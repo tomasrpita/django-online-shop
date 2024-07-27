@@ -154,3 +154,9 @@ STRIPE_WEBHOOK_SECRET = config("STRIPE_WEBHOOK_SECRET")
 STRIPE_API_VERSION = "2024-04-10"
 
 STATIC_ROOT = BASE_DIR / "static"
+
+
+# Redis configuration
+REDIS_HOST = config("REDIS_HOST")
+REDIS_PORT = config("REDIS_PORT", cast=int)
+REDIS_DB = config("REDIS_DB", cast=int)
