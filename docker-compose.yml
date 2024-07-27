@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
 
@@ -12,12 +12,13 @@ services:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
 
-  cache:
+  redis:
     image: redis:7.2.4
     restart: always
+    ports:
+      - "6379:6379"
     volumes:
-      - ./data/cache:/data
+      - redis:/data
 
 volumes:
-  cache:
-    
+  redis:
