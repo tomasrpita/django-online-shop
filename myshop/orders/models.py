@@ -45,9 +45,22 @@ class Order(models.Model):
             return total_cost * (self.discount / Decimal(100))
         return Decimal(0)
 
+    def get_total_weight(self):
+        return sum(item.product.weight * item.quantity for item in self.items.all())
+
+    def get_shipping_cost(self):
+        total_weight = self.get_total_weight()
+        # Define your shipping cost calculation logic here
+        if total_weight <= 500:
+            return Decimal("5.00")  # flat rate for up to 500 grams
+        elif total_weight <= 2000:
+            return Decimal("10.00")  # flat rate for up to 2000 grams
+        else:
+            return Decimal("20.00")  # flat rate for over 2000 grams
+
     def get_total_cost(self):
         total_cost = self.get_total_cost_before_discount()
-        return total_cost - self.get_discount()
+        return total_cost - self.get_discount() + self.get_shipping_cost()
 
     def get_stripe_url(self):
         if not self.stripe_id:

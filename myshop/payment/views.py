@@ -13,9 +13,11 @@ stripe.api_version = settings.STRIPE_API_VERSION
 def payment_process(request):
     order_id = request.session.get("order_id")
     order = get_object_or_404(Order, id=order_id)
+
     if request.method == "POST":
         success_url = request.build_absolute_uri(reverse("payment:completed"))
         cancel_url = request.build_absolute_uri(reverse("payment:canceled"))
+
         # Stripe checkout session data
         session_data = {
             "mode": "payment",
@@ -30,7 +32,7 @@ def payment_process(request):
                 {
                     "price_data": {
                         "unit_amount": int(item.price * Decimal("100")),
-                        "currency": "eur",
+                        "currency": "usd",
                         "product_data": {
                             "name": item.product.name,
                         },
@@ -38,16 +40,37 @@ def payment_process(request):
                     "quantity": item.quantity,
                 }
             )
+
+        # add shipping cost to the Stripe checkout session
+        shipping_cost = order.get_shipping_cost()
+        session_data["line_items"].append(
+            {
+                "price_data": {
+                    "unit_amount": int(shipping_cost * Decimal("100")),
+                    "currency": "usd",
+                    "product_data": {
+                        "name": "Shipping Cost",
+                    },
+                },
+                "quantity": 1,
+            }
+        )
+
         # Stripe coupon
         if order.coupon:
             stripe_coupon = stripe.Coupon.create(
-                name=order.coupon.code, percent_off=order.discount, duration="once"
+                name=order.coupon.code,
+                percent_off=order.discount,
+                duration="once",
             )
             session_data["discounts"] = [{"coupon": stripe_coupon.id}]
+
         # create Stripe checkout session
         session = stripe.checkout.Session.create(**session_data)
+
         # redirect to Stripe payment form
         return redirect(session.url, code=303)
+
     else:
         return render(request, "payment/process.html", locals())
 
