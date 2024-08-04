@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "payment.apps.PaymentConfig",
     "coupons.apps.CouponsConfig",
     "parler",
+    "localflavor",
 ]
 
 MIDDLEWARE = [
