@@ -1,6 +1,9 @@
 from django import forms
+
 from .models import Order
-from localflavor.generic.forms import USZipCodeField
+
+# from localflavor.generic.forms import USZipCodeField
+from localflavor.us.forms import USZipCodeField
 
 
 class OrderCreateForm(forms.ModelForm):
