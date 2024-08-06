@@ -28,7 +28,7 @@ Asegúrate de tener Docker y Docker Compose instalados en tu sistema.
 
     ```sh
     git clone https://github.com/tomasrpita/django-online-shop.git
-    cd django-online-shop
+    
     ```
 
 2. **Crear un entorno virtual e instalar las dependencias de Python:**
